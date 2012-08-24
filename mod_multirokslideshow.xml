@@ -107,7 +107,7 @@
     </params>
     <params group="advanced" addpath="/administrator/components/com_multicategories/elements">
         <param name="multicategories" type="multicategoriescategory" default="" size="10" multiple="multiple" label="Multicategories" description="Choose categories with Ctrl+Click"/>
-        <param name="multicategory_articles" type="radio" default="0" label="Multicategory Articles" description="Enable/Disable multicategory articles support">
+        <param name="multicategories_articles" type="radio" default="0" label="Multicategories Articles" description="Enable/Disable multicategories articles support">
             <option value="1">Yes</option>
             <option value="0">No</option>
         </param>

@@ -17,25 +17,29 @@ defined('_JEXEC') or die('Restricted access');
 
 // Check for multicategories
 $multicategories = (array)$params->get('multicategories', array());
-if(count($multicategories) > 0){
-    if(JRequest::getCmd('option') != 'com_multicategories') return;
+if (count($multicategories) > 0) {
+    // Check for option
+    if (JRequest::getCmd('option') != 'com_multicategories') return;
+    // Check for view
     $view = JRequest::getCmd('view');
-    $category = (int)JRequest::getCmd($view == 'category' ? 'id' : 'catid');
-    if(!in_array($category, $multicategories)) return;
+    if (!$params->get('multicategories_articles') && $view == 'article') return;
+    // Check for id
+    $id = (int)JRequest::getCmd($view == 'category' ? 'id' : 'catid');
+    if (!in_array($id, $multicategories)) return;
 }
 
 // Include the syndicate functions only once
-require_once (dirname(__FILE__).DS.'helper.php');
+require_once (dirname(__FILE__) . DS . 'helper.php');
 
-$imagePath 	= modRokSlideshowHelper::cleanDir($params->get( 'imagePath', 'images/stories/fruit' ));
-$sortCriteria = $params->get( 'sortCriteria', 0);
-$sortOrder = $params->get( 'sortOrder', 'asc');
-$sortOrderManual = $params->get( 'sortOrderManual', '');
+$imagePath = modRokSlideshowHelper::cleanDir($params->get('imagePath', 'images/stories/fruit'));
+$sortCriteria = $params->get('sortCriteria', 0);
+$sortOrder = $params->get('sortOrder', 'asc');
+$sortOrderManual = $params->get('sortOrderManual', '');
 
 if (trim($sortOrderManual) != "")
-	$images = explode(",", $sortOrderManual);
+    $images = explode(",", $sortOrderManual);
 else
-	$images = modRokSlideshowHelper::imageList($imagePath, $sortCriteria, $sortOrder);
+    $images = modRokSlideshowHelper::imageList($imagePath, $sortCriteria, $sortOrder);
 
 if (count($images) > 0) modRokSlideshowHelper::loadScripts($params, $imagePath, $images);
 require(JModuleHelper::getLayoutPath('mod_multirokslideshow'));
